@@ -60,6 +60,7 @@ public class ModBusRestAPI {
         }
         return Response.ok(helper.getModulesByUE(ue)).build();
     }
+
 }
 
 

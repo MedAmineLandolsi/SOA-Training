@@ -39,6 +39,16 @@ public class ModBusRestAPI {
     public Response searchbytype(@PathParam("type") Module.TypeModule type){
         return Response.ok(helper.getModulesByType(type)).build();
     }
+    @DELETE
+    @Path("/{matricule}")
+    public Response deleteModule(@PathParam("matricule") String matricule) {
+        if (helper.deleteModule(matricule)) {
+            return Response.status(200).entity("module deleted").build();
+        }
+        return Response.status(400)
+                .entity("Module not found").build();
+    }
+
 
     }
 

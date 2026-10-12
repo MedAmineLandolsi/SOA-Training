@@ -5,7 +5,7 @@ import entities.UniteEnseignement;
 import metiers.ModuleBusiness;
 import metiers.UniteEnseignementBusiness;
 
-import javax.print.attribute.standard.Media;
+
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -40,7 +40,7 @@ public class ModBusRestAPI {
         return Response.ok(helper.getModulesByType(type)).build();
     }
     @DELETE
-    @Path("/{matricule}")
+    @Path("/delete/{matricule}")
     public Response deleteModule(@PathParam("matricule") String matricule) {
         if (helper.deleteModule(matricule)) {
             return Response.status(200).entity("module deleted").build();
@@ -48,9 +48,18 @@ public class ModBusRestAPI {
         return Response.status(400)
                 .entity("Module not found").build();
     }
-
-
+    // GET /modules/ue/{code}  -> modules of one UE
+    // Modules d'une UE : /module/ue/1
+    @Path("/ue/{code}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getModulesByUE(@PathParam("code") int code) {
+        UniteEnseignement ue = UniteEnseignementBusiness.getUEByCode(code);
+        if (ue == null) {
+            return Response.status(404).entity("UE not found").build();
+        }
+        return Response.ok(helper.getModulesByUE(ue)).build();
     }
-
+}
 
 

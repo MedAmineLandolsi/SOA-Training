@@ -12,6 +12,12 @@ import javax.ws.rs.core.Response;
 @Path("/mb")
 public class ModBusRestAPI {
     ModuleBusiness helper = new ModuleBusiness();
+    @Path("/list")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getListMB(){
+        return Response.status(200).entity(helper.getAllModules()).build();
+    }
     @Path("/addmod")
     @POST
     @Produces(MediaType.APPLICATION_JSON)

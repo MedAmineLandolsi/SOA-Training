@@ -20,13 +20,27 @@ public class ModBusRestAPI {
     }
     @Path("/addmod")
     @POST
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces({MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN})
     public Response addmodule(Module mod){
         if(helper.addModule(mod)){
             return Response.status(201).entity("added successfully").build();}
         else return Response.status(400).entity("didn't get added").build();
 
-        }
     }
+    @Path ("/search/{matricule}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response searchbymat(@PathParam("matricule") String matricule){
+        return Response.ok(helper.getModuleByMatricule(matricule)).build();
+    }
+    @Path ("/search/{type}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response searchbytype(@PathParam("type") Module.TypeModule type){
+        return Response.ok(helper.getModulesByType(type)).build();
+    }
+
+    }
+
 
 
